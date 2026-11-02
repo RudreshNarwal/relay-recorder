@@ -2,9 +2,9 @@
 
 Configure **Connections** as a workspace owner/admin, select an exact destination and describe its audience. Create and save a workflow draft, then choose **Review external delivery**. The review shows the actual saved text, destination and audience. A confirmation queues the delivery; changing a draft, revision, connection or video access before sending cancels it. Video visibility never changes to make an external link work.
 
-Credentials use the existing AES-256-GCM server encryption. They never appear in API responses, logs, browser bundles or job payloads. This release accepts manually supplied scoped tokens. It does **not** yet implement OAuth authorization/refresh, provider destination discovery or comprehensive integration health checks. Expired credentials require disconnecting and creating a replacement connection. Saving a connection does not contact the provider.
+Credentials use the existing AES-256-GCM server encryption. They never appear in API responses, logs, browser bundles or job payloads. Connections accept manually supplied scoped tokens or a connected OAuth account when the server owner has configured the provider application. The account flow supports authorization and token refresh where the provider supplies refresh credentials; manual tokens still require replacement when expired. Destination discovery and comprehensive live-provider qualification remain incomplete. Saving a connection never delivers content; Atlassian OAuth connections check access to the selected site.
 
-| Connector | Implemented write | Operator credentials / requirements |
+| Connector | Implemented write | Operator credentials / requirements (manual-token path) |
 |---|---|---|
 | GitHub | New issue, or comment on a selected issue/PR | Fine-grained token for the repository; Issues write, or the applicable PR write permission |
 | Slack | Plain-text message in a selected channel; no mention expansion or unfurls | Bot token with `chat:write`; bot admitted to that channel |
@@ -16,7 +16,7 @@ Credentials use the existing AES-256-GCM server encryption. They never appear in
 | Gmail | Mailbox draft to selected recipient; never sends | OAuth access token obtained by the operator with `gmail.compose` |
 | Outlook | Mailbox draft to selected recipient; never sends | Delegated Graph access token with `Mail.ReadWrite` |
 
-These adapters passed protocol fixtures, not live-account qualification. Jira projects requiring custom fields need further field-mapping support; JSM request types are not supported by the generic issue adapter. Salesforce engagement sync, calendar/provider recording imports, signed webhooks/scoped service tokens, and the planned compatibility catalogue remain pending. An exported URL is not counted as a native connector.
+These adapters passed protocol fixtures, not live-account qualification. Jira projects requiring custom fields need further field-mapping support; JSM request types are not supported by the generic issue adapter. Calendar OAuth, sync and per-occurrence selection exist in the Meetings area; they do not capture a meeting. Salesforce engagement sync, provider recording imports, signed webhooks/scoped service tokens, and the planned compatibility catalogue remain pending. An exported URL is not counted as a native connector.
 
 The durable outbox snapshots draft, revision, destination version, actor and video access. Workers recheck these under database locks immediately before the bounded provider call. Duplicate enqueue uses a workspace-scoped idempotency key. Explicit 429 responses retry within the existing job budget. Lost acknowledgements, malformed success responses, uncertain 5xx responses, or a crash after send begins stop in `uncertain`; they never silently resend. Inspect the provider, then record its item ID or explicitly confirm absence before retrying. A successful mail delivery means **draft created**, not email sent.
 

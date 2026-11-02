@@ -3,21 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Relay — The open-source alternative to Loom</title>
+    <title>Relay — Open-source Loom alternative with optional AI</title>
     <meta
       name="description"
-      content="Record, edit, and share videos on your own infrastructure. Relay is an open-source alternative to Loom with a native Mac recorder and private transcription."
+      content="An open-source alternative to Loom with native Mac recording, private transcription, and optional AI summaries, action items, and documents. Self-host your workspace."
     />
     <meta name="theme-color" content="#f8f7fc" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://relay.ideolyst.com/" />
     <meta
       property="og:title"
-      content="Relay — Show your work. Keep it yours."
+      content="Relay — Open-source Loom alternative with optional AI"
     />
     <meta
       property="og:description"
-      content="The open-source alternative to Loom. A native Mac recorder, a self-hosted video workspace, and private transcription."
+      content="Record on your Mac. Self-host your workspace. Use private transcription and optional AI for summaries, action items, documents, and agent handoffs."
     />
     <meta
       property="og:image"
@@ -49,7 +49,7 @@
           /><span>Relay</span></a
         >
         <nav aria-label="Main navigation">
-          <a href="#workflow">How it works</a>
+          <a href="#ai">AI features</a>
           <a href="#open-source">Open source</a>
           <a
             class="nav-github"
@@ -273,6 +273,99 @@
         </div>
       </section>
 
+      <section
+        class="section container ai-section"
+        id="ai"
+        aria-labelledby="ai-title"
+      >
+        <div class="section-heading">
+          <p class="eyebrow">YOUR RECORDING IS JUST THE START.</p>
+          <h2 id="ai-title">
+            Say it once.<br /><em>Let AI help with the write-up.</em>
+          </h2>
+          <p>
+            Turn a ready transcript into something your team can use. Keep the
+            draft, edit the details, and decide what gets shared.
+          </p>
+        </div>
+        <div class="ai-layout">
+          <div class="ai-features">
+            <article>
+              <h3>Titles, summaries, chapters, and actions</h3>
+              <p>
+                Give viewers a useful overview, navigable chapters, and a clear
+                list of next steps.
+              </p>
+            </article>
+            <article>
+              <h3>A walkthrough becomes a working document</h3>
+              <p>
+                Draft SOPs, guides, bug reports, Jira or Linear issues, PR
+                descriptions, QA plans, and messages. Choose from 14 built-in
+                templates or create your own.
+              </p>
+            </article>
+            <article>
+              <h3>Context for your next agent task</h3>
+              <p>
+                Draft goals, steps, acceptance criteria, and open questions from
+                your transcript. Review and export the handoff before giving it
+                to an agent.
+              </p>
+            </article>
+            <article>
+              <h3>Meeting recaps you can review</h3>
+              <p>
+                Opt into a recap draft after an uploaded or attended recording
+                is transcribed. Review decisions and actions; Relay does not
+                join meetings or automatically email recaps.
+              </p>
+            </article>
+          </div>
+          <aside class="ai-control" aria-labelledby="ai-control-title">
+            <span class="step">YOU CHOOSE THE PROVIDER</span>
+            <h3 id="ai-control-title">
+              Private transcription.<br />Optional cloud AI.
+            </h3>
+            <p>
+              Parakeet transcription runs on your Mac or self-hosted server. AI
+              writing uses the cloud provider and model configured by your
+              server owner.
+            </p>
+            <ul class="ai-providers">
+              <li>Gemini AI Studio</li>
+              <li>Vertex AI</li>
+              <li>OpenAI</li>
+              <li>Anthropic</li>
+              <li>OpenRouter</li>
+            </ul>
+            <p class="ai-disclosure">
+              Cloud AI receives transcript content and instructions, not screen
+              images. Provider charges may apply. Core recording and editing
+              work without cloud AI.
+            </p>
+            <a
+              class="text-link"
+              href="https://github.com/RudreshNarwal/relay-recorder/blob/main/docs/WORKFLOWS.md"
+              >Explore AI workflows <span aria-hidden="true">↗</span></a
+            >
+          </aside>
+        </div>
+        <div class="ai-boundaries">
+          <p>
+            <strong>Keep the final say.</strong> Review AI drafts before
+            sharing. Silence/filler cleanup and optional repeat/tangent
+            suggestions are experimental; preview proposed cuts before applying
+            them. Live cloud-generation quality is still being qualified.
+          </p>
+          <a
+            href="https://github.com/RudreshNarwal/relay-recorder/blob/main/docs/LOOM-COMPARISON.md"
+            >See capabilities and remaining gaps
+            <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
+
       <section class="ownership-section" aria-labelledby="ownership-title">
         <div class="container ownership-grid">
           <div>
@@ -454,7 +547,14 @@ pnpm startup</code></pre>
               Relay covers the record, edit, and share workflow with a native
               Mac recorder and a self-hosted web workspace. It's for teams that
               want to operate their own video infrastructure. Relay is an early
-              source alpha; it does not promise feature parity with Loom.
+              source alpha; it does not yet match every Loom paid feature.
+              Automatic meeting capture, richer visual agent context,
+              Windows/mobile/browser recorders, SSO/SCIM, and custom media
+              retention remain gaps. See the
+              <a
+                href="https://github.com/RudreshNarwal/relay-recorder/blob/main/docs/LOOM-COMPARISON.md"
+                >current capability comparison</a
+              >.
             </p>
           </details>
           <details>
@@ -465,6 +565,28 @@ pnpm startup</code></pre>
               No paid Relay subscription is required. Optional hosting, setup,
               and support may help fund development in the future; no paid plans
               are available today.
+            </p>
+          </details>
+          <details>
+            <summary>Do I need to pay Relay to use AI?</summary>
+            <p>
+              There is no Relay AI subscription gate in the current core. Your
+              server owner configures a supported cloud provider and model for
+              generation; that provider may charge for usage. Private Parakeet
+              transcription does not need a cloud AI account. Manual workflow
+              drafts also work without cloud credentials.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Can AI watch my screen or control my coding agent?
+            </summary>
+            <p>
+              No. Current AI generation uses transcript text, with timestamps
+              when available. It does not inspect screenshots, capture browser
+              console/network context, or execute agent tasks. The agent handoff
+              is an editable document you review and export. Visual capture
+              context and an MCP integration are future work.
             </p>
           </details>
           <details>

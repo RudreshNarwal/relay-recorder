@@ -18,6 +18,7 @@
 <p align="center">
   <a href="#quick-start"><strong>Get started</strong></a> &nbsp;·&nbsp;
   <a href="#macos-recorder">Build the Mac app</a> &nbsp;·&nbsp;
+  <a href="https://relay.ideolyst.com/#ai">AI features</a> &nbsp;·&nbsp;
   <a href="#documentation">Documentation</a> &nbsp;·&nbsp;
   <a href="#contributing">Contribute</a>
 </p>
@@ -102,7 +103,7 @@ Parakeet v3 is the default transcription system and supports its documented 25-l
 
 Server owners can configure and test Deepgram, AssemblyAI, or OpenAI speech settings and allow specific workspaces to use them. Selecting an external provider sends audio to that provider and may incur charges. Relay does not silently switch providers after a failure. Captions and word-based cuts depend on the timing information returned by the selected model; untimed transcripts remain searchable and editable. See [transcription and cleanup](docs/TRANSCRIPTION.md).
 
-For AI document generation, open **Settings → AI** as the server owner. Choose Gemini AI Studio, Vertex AI, OpenAI, Anthropic, or OpenRouter, configure credentials and a model, then test the connection. Vertex uses server-side Application Default Credentials. Cloud AI operates on transcripts; provider usage may incur charges. See [provider configuration](docs/DEPLOYMENT.md#provider-credentials).
+For AI document generation, open **Settings → AI providers** as the server owner. Choose Gemini AI Studio, Vertex AI, OpenAI, Anthropic, or OpenRouter, configure credentials and a model, then test the connection. Vertex uses server-side Application Default Credentials. Cloud AI operates on transcripts; provider usage may incur charges. See [provider configuration](docs/DEPLOYMENT.md#provider-credentials).
 
 ## Development
 
@@ -186,6 +187,7 @@ Capture, upload, processing, and publication have separate states. Edits create 
 | [Analytics](docs/ANALYTICS.md), [Reports](docs/REPORTS.md), [Branding](docs/BRANDING.md) | Recording engagement, workspace reporting, and visual identity |
 | [Meeting capabilities](docs/MEETING-CAPABILITIES.md) | Automatic capture prerequisites and remaining qualification gaps |
 | [API contract](docs/openapi.json) | Machine-readable HTTP API reference |
+| [Loom comparison](docs/LOOM-COMPARISON.md) | Current AI capabilities, premium-feature gaps, and evidence |
 | [Website](website/README.md) | Marketing site preview, checks, and Cloudflare deployment |
 | [Validation](docs/VALIDATION.md) | Recorded validation evidence and remaining hardware checks |
 

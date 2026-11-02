@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4.156.1/config-schema.json",
+  "name": "relay-website",
+  "compatibility_date": "2026-11-02",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "relay.ideolyst.com", "custom_domain": true }]
+}

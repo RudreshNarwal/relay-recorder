@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-26",
+  "fixture": "services/worker/fixtures/connection.wav",
+  "sha256": "49797a3885874f0f181d29485f74581480cdca0ff7849ae150590b3713f3d882",
+  "source": "Synthetic English speech generated for explicit connection tests; no user recording.",
+  "seconds": 3.094,
+  "qualification": {
+    "parakeet_server": "Real CPU inference, speech and silence, with actual word timings. Multilingual accuracy not benchmarked.",
+    "parakeet_mac": "Pinned CoreML download, checksum verification, offline load, speech/silence and original-byte preservation passed.",
+    "deepgram": "nova-3 transport fixtures passed; live credentials unavailable.",
+    "assemblyai": "universal-3-5-pro transport/checkpoint/uncertain-submission fixtures passed; live credentials unavailable.",
+    "openai": "gpt-4o-transcribe text-only and gpt-4o-transcribe-diarize segment-timed transport fixtures passed; live credentials unavailable."
+  },
+  "limitations": [
+    "External configuration stays unavailable until an instance owner explicitly tests its saved version.",
+    "Long media uses bounded contiguous provider windows. Boundary-word accuracy and overlap reconciliation remain pending.",
+    "Provider language claims follow documented models; real multilingual accuracy remains unverified."
+  ]
+}

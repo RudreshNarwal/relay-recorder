@@ -1,0 +1,40 @@
+name: Bug report
+description: Report a reproducible problem with Relay.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "For security vulnerabilities, use the private reporting link in SECURITY.md. Do not include credentials or private recordings."
+  - type: input
+    id: version
+    attributes:
+      label: Relay version or commit
+      placeholder: "Release tag or commit SHA"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: "OS, architecture, browser or Mac app, and Docker or host development. Include relevant tool versions."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: "Use synthetic data and describe the smallest reproducible case."
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs or screenshots
+      description: "Remove tokens, cookies, email addresses, private paths, and recording content. Do not attach .env files or database dumps."

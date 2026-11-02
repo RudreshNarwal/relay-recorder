@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Setup questions and ideas
+    url: https://github.com/RudreshNarwal/relay-recorder/discussions
+    about: Ask the community before opening a bug report.
+  - name: Report a security vulnerability privately
+    url: https://github.com/RudreshNarwal/relay-recorder/security/advisories/new
+    about: Do not disclose vulnerabilities or private data in public issues.

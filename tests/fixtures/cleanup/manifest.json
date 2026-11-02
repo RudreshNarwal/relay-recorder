@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-26",
+  "status": "experimental; quality qualification pending",
+  "balanced": {
+    "minimumSilenceSeconds": 0.6,
+    "retainedGapSeconds": 0.25,
+    "speechPaddingSeconds": 0.1,
+    "audiblePeakThresholdDbfs": -60
+  },
+  "cases": [
+    {
+      "case": "quiet speech absent from transcript",
+      "evidence": "VAD interval protection and transcript protection tested independently"
+    },
+    {
+      "case": "music and breaths",
+      "evidence": "Audible energy protection; no music-classifier claim"
+    },
+    {
+      "case": "pause and silence",
+      "evidence": "Rule fixtures and real private VAD on speech/silence"
+    },
+    {
+      "case": "overlapping voices",
+      "evidence": "Word-overlap guard; broader real-speaker corpus pending"
+    },
+    {
+      "case": "fillers and meaningful repetitions",
+      "evidence": "Actual-word-timing rules; repetitions only optional reviewable AI proposals"
+    },
+    {
+      "case": "stitch and repeated source clips",
+      "evidence": "Source/revision-aware captions, comments, chapters, pending blur mapping and real FFmpeg render"
+    },
+    {
+      "case": "missing word timing",
+      "evidence": "Filler/context features require word alignment; no invented alignment"
+    },
+    {
+      "case": "audio discontinuities",
+      "evidence": "Real encoded signal regression verifies 5 ms edge fades without duration shift"
+    }
+  ],
+  "benchmark": {
+    "requiredClipsPerAdvertisedLanguage": 30,
+    "consentedCorpusAvailable": false,
+    "fillerPrecisionTarget": 0.95,
+    "measuredFillerPrecision": null,
+    "noDeletedAnnotatedSpeech": "Passed synthetic/recognized-speech protection fixtures; human-annotated corpus pending",
+    "loomPremiumComparison": "Pending authorized premium account and matched consented fixtures"
+  },
+  "tests": [
+    "tests/worker-cleanup-analysis.test.ts",
+    "tests/timeline.test.ts",
+    "tests/api.test.ts",
+    "tests/audio-recordings.test.ts",
+    "tests/cleanup-ui.spec.ts",
+    "tests/asr_test.py",
+    "tests/asr_model_test.py"
+  ]
+}

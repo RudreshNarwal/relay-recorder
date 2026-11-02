@@ -1,0 +1,17 @@
+import AppKit
+let destination = URL(fileURLWithPath: CommandLine.arguments[1])
+let image = NSImage(size: NSSize(width: 1024, height: 1024))
+image.lockFocus()
+NSColor(calibratedRed: 0.447, green: 0.329, blue: 0.862, alpha: 1).setFill()
+NSBezierPath(roundedRect: CGRect(x: 30, y: 30, width: 964, height: 964), xRadius: 220, yRadius: 220).fill()
+NSColor.white.setFill()
+let transform = AffineTransform(rotationByDegrees: -18)
+let first = NSBezierPath(roundedRect: CGRect(x: 330, y: 355, width: 140, height: 310), xRadius: 44, yRadius: 44)
+let second = NSBezierPath(roundedRect: CGRect(x: 535, y: 320, width: 140, height: 425), xRadius: 44, yRadius: 44)
+first.transform(using: transform); second.transform(using: transform)
+let center = AffineTransform(translationByX: -90, byY: 140)
+first.transform(using: center); second.transform(using: center); first.fill(); second.fill()
+NSBezierPath(ovalIn: CGRect(x: 690, y: 285, width: 80, height: 80)).fill()
+image.unlockFocus()
+let bitmap = NSBitmapImageRep(data: image.tiffRepresentation!)!
+try bitmap.representation(using: .png, properties: [:])!.write(to: destination)

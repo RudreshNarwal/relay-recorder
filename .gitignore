@@ -1,0 +1,23 @@
+node_modules/
+.next/
+.build/
+.swiftpm/
+.env
+.env.local
+.env.*.local
+data/
+*.tsbuildinfo
+__pycache__/
+.venv/
+.pytest_cache/
+test-results/
+playwright-report/
+.DS_Store
+.superpowers/
+artifacts/
+apps/web/public/downloads/*.dmg
+backups/
+
+# Local launch evidence and generated native packages.
+.context/
+apps/macos/dist/

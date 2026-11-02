@@ -1,0 +1,17 @@
+# Customer branding and calls to action
+
+Workspace owners/admins open **Branding** from the sidebar. Set a logo, display name, primary/accent colors, header/footer, optional Relay credit and player-poster treatment. The live preview is not published until **Publish branding** succeeds. Version checks reject stale saves. The workspace application retains Relay navigation; protected share pages and embeds use the selected customer identity.
+
+Logos accept nonanimated PNG/JPEG/WebP, at most 2 MB and 4 million decoded pixels. Sharp re-encodes them as WebP within 512×512, strips metadata and rejects SVG/HTML and oversized images. Assets remain in PostgreSQL and follow workspace access for editor previews or current video/share/password permissions for viewers. There is no public logo directory or server-side URL fetch. Up to 32 logos/workspace; remove unused logos through the editor. Currently published logos cannot be deleted. Restoring defaults changes the preview; publish explicitly to apply it.
+
+Colors require 4.5:1 contrast with white primary-button text and dark accent text. Text uses React escaping; no arbitrary HTML, styles or scripts are accepted. Branded thumbnails place an identity label over the player poster. The source thumbnail and exported MP4 are unchanged; custom/animated render outputs belong to the presentation workstream.
+
+Recording editors open **Presentation** to add up to three HTTPS calls to action with a label and start/end seconds. URLs cannot contain credentials, controls, whitespace, `javascript:` or data schemes. Links identify the external destination, open with `noopener noreferrer`, and suppress referrer leakage. Header/footer overrides can be set per recording. The API also accepts validated color, credit and poster-treatment overrides.
+
+CTA changes require both presentation version and current published revision. After video edits publish a new revision, old CTAs stop displaying until the editor reviews and republishes their timings. CTAs are viewer controls, not burned into downloads. **Workflows → Call to action draft** provides an optional AI/manual suggestion; the editor must review and enter the link explicitly. No provider automatically chooses or publishes a destination.
+
+Insights displays deduplicated impressions, clicks and click/impression ratio by CTA and presentation version. Owner previews do not count. Dedupe applies per page session/action/event kind; failed telemetry never blocks playback/navigation. Daily aggregates use UTC calendar days intersecting the report range, independently of playback-session dates. A click is an opened destination, not a sale/task completion. Client telemetry can be missing or forged. No downstream tracking pixels or third-party analytics SDKs are installed.
+
+Raw CTA events follow instance raw analytics retention (90 days by default); daily totals follow aggregate retention (13 months). Logo bytes, settings and CTA recipes are included in normal PostgreSQL backups. Custom domains use the existing self-hosted HTTPS deployment; no domain registration or multi-domain workspace routing is provided.
+
+Validation: raster/metadata/size and contrast/destination unit cases; cross-workspace assets, private and revoked links, timestamp/version fencing, duplicate clicks and preview exclusion in PostgreSQL; Chromium branding preview/publish, mobile width, share/embed rendering and safe CTA attributes. Browser screenshots use fixture data. Physical mobile and external Loom visual comparison remain unqualified.

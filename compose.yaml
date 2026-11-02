@@ -1,0 +1,81 @@
+name: relay
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: relay
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run pnpm setup}
+      POSTGRES_DB: relay
+    ports: ["127.0.0.1:55432:5432"]
+    volumes: ["postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U relay"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  mail:
+    image: axllent/mailpit:latest
+    ports: ["127.0.0.1:1025:1025", "127.0.0.1:8025:8025"]
+    profiles: [dev]
+  web:
+    build: .
+    command: ["sh", "-c", "pnpm migrate && pnpm start"]
+    ports: ["127.0.0.1:${WEB_PORT:-3110}:3000"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://relay:${POSTGRES_PASSWORD}@db:5432/relay
+      DATA_DIR: /data
+      ASR_URL: http://asr:8100
+      SMTP_HOST: ${CONTAINER_SMTP_HOST:-mail}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/v1/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    volumes: ["media:/data"]
+    depends_on:
+      db: {condition: service_healthy}
+  worker:
+    build: .
+    command: ["pnpm", "worker"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://relay:${POSTGRES_PASSWORD}@db:5432/relay
+      DATA_DIR: /data
+      ASR_URL: http://asr:8100
+      SMTP_HOST: ${CONTAINER_SMTP_HOST:-mail}
+      WORKER_HEARTBEAT_PATH: /tmp/relay-worker-heartbeat
+    healthcheck:
+      test: ["CMD", "node", "-e", "const fs=require('node:fs');process.exit(Date.now()-fs.statSync('/tmp/relay-worker-heartbeat').mtimeMs<90000?0:1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    mem_limit: ${WORKER_MEMORY:-4g}
+    cpus: ${WORKER_CPUS:-2}
+    pids_limit: 256
+    stop_grace_period: 60s
+    volumes: ["media:/data"]
+    depends_on:
+      db: {condition: service_healthy}
+      web: {condition: service_healthy}
+  asr:
+    build: services/asr
+    environment:
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN}
+      ASR_MODEL: nemo-parakeet-tdt-0.6b-v3
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/health', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15m
+    mem_limit: ${ASR_MEMORY:-4g}
+    cpus: ${ASR_CPUS:-4}
+    pids_limit: 256
+    volumes: ["models:/models"]
+volumes:
+  postgres:
+  media:
+  models:

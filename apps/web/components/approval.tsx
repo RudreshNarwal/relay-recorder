@@ -1,0 +1,10 @@
+'use client';
+import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { CheckCircle2, Monitor, ShieldCheck } from 'lucide-react';
+import { api, json, message } from './api';
+import { ErrorNote, Logo } from './ui';
+export function Approval({inviteToken}:{inviteToken?:string}){
+ const search=useSearchParams();const id=search.get('id');const [busy,setBusy]=useState(false);const [error,setError]=useState('');const [done,setDone]=useState(false);
+ return <main className="session-card"><Logo/>{done?<><CheckCircle2 size={40} color="#a485cb" style={{display:'block',margin:'0 auto 20px'}}/><h2>{inviteToken?'You’re part of the team.':'You’re connected.'}</h2><p>{inviteToken?'Your invitation was accepted. Your team’s workspace is ready for you.':'Return to Relay for Mac to finish signing in. You can close this window.'}</p>{inviteToken&&<a className="button primary" href="/">Open workspace</a>}</>:<><div style={{margin:'0 auto 20px',color:'#a48ac4'}}>{inviteToken?<ShieldCheck size={35}/>:<Monitor size={35}/>}</div><h2>{inviteToken?'A seat at the table.':'Connect Relay for Mac.'}</h2><p>{inviteToken?'Accept your invitation to join this workspace. Sign in with the email address that received the invitation.':'Approve this request only if you started sign-in from Relay for Mac. This gives the app access to your recordings and workspaces.'}</p><ErrorNote error={error}/><button className="button primary" disabled={busy||(!inviteToken&&!id)} onClick={async()=>{setBusy(true);setError('');try{await api(inviteToken?`/invites/${inviteToken}/accept`:'/device/approve',json('POST',inviteToken?{}:{id}));setDone(true);}catch(err){setError(message(err));}finally{setBusy(false);}}}>{busy?'One moment…':inviteToken?'Accept invitation':'Approve this device'}</button>{!inviteToken&&!id&&<p className="help-note">Missing device request. Start sign-in again from the Mac app.</p>}<p><a className="text-button" href={`/login?next=${encodeURIComponent(typeof location!=='undefined'?location.pathname+location.search:'/')}`}>Sign in to your Relay account</a></p></>}</main>;
+}

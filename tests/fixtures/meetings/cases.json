@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "platforms": ["zoom_rtms", "google_meet", "microsoft_teams"],
+  "cases": [
+    {"id": "scheduled", "expected": "Exactly one permitted capture starts for the selected occurrence."},
+    {"id": "ad_hoc", "expected": "Explicit start reaches a visible permitted capture state."},
+    {"id": "lobby", "expected": "No media before authorized admission; admission transitions once."},
+    {"id": "permission_denied", "expected": "No capture or automatic workaround; denial shown."},
+    {"id": "decoded_media", "expected": "Actual audio/video decode, duration and synchronization verified."},
+    {"id": "removed", "expected": "Capture stops; permitted committed media remains recoverable."},
+    {"id": "network_loss", "expected": "Bounded reconnect, no duplicate sessions, durable committed media."},
+    {"id": "repeated_join", "expected": "Repeated webhooks and starts create at most one active capture."},
+    {"id": "rescheduled_recurrence", "expected": "Occurrence identity survives reschedule; canceled generation cannot start."},
+    {"id": "host_end", "expected": "Capture seals once; upload and processing remain independent."},
+    {"id": "private_meeting", "expected": "Only authorized participants and Relay viewers receive artifacts."},
+    {"id": "recording_disabled_tenant", "expected": "Tenant denial blocks capture and cannot trigger a fallback."},
+    {"id": "consent_revoked", "expected": "Remote permission revocation immediately stops further capture."}
+  ],
+  "results": [],
+  "status": "not_tested",
+  "reason": "Authorized test meetings, accounts, app credentials, and required runners are not available."
+}

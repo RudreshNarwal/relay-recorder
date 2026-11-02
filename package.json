@@ -1,0 +1,61 @@
+{
+  "name": "relay-video",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/next.mjs dev apps/web --hostname 127.0.0.1 --port 3110",
+    "build": "node scripts/next.mjs build apps/web",
+    "start": "node scripts/next.mjs start apps/web --hostname 0.0.0.0",
+    "worker": "node --env-file-if-exists=.env --import tsx services/worker/src/index.ts",
+    "migrate": "node --env-file-if-exists=.env --import tsx scripts/migrate.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "bootstrap": "node --env-file-if-exists=.env --import tsx scripts/bootstrap.ts",
+    "setup": "node scripts/setup.mjs",
+    "test:integration": "node --env-file-if-exists=.env --test-concurrency=1 --import tsx --test tests/api.test.ts tests/worker-*.test.ts",
+    "cleanup": "node --env-file-if-exists=.env --import tsx scripts/cleanup.ts",
+    "package:mac": "bash scripts/package-mac.sh",
+    "startup": "node scripts/startup.mjs"
+  },
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.15.0 <11"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "^4.0.88",
+    "@ai-sdk/google": "^4.0.105",
+    "@ai-sdk/google-vertex": "^5.0.122",
+    "@ai-sdk/openai": "^4.0.102",
+    "@openrouter/ai-sdk-provider": "^3.1.0",
+    "ai": "^7.0.153",
+    "better-auth": "^1.7.13",
+    "hls.js": "^1.7.3",
+    "lucide-react": "^1.61.0",
+    "next": "^16.4.3",
+    "nodemailer": "^10.2.1",
+    "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sharp": "0.35.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "packageManager": "pnpm@10.15.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
+  "license": "AGPL-3.0-only"
+}

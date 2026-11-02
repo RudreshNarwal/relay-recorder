@@ -1,0 +1,26 @@
+services:
+  web:
+    ports: !reset []
+    restart: unless-stopped
+  worker:
+    restart: unless-stopped
+  db:
+    ports: !reset []
+    restart: unless-stopped
+  asr:
+    restart: unless-stopped
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443", "443:443/udp"]
+    environment:
+      RELAY_DOMAIN: ${RELAY_DOMAIN:?Set RELAY_DOMAIN to your public hostname}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      web: {condition: service_healthy}
+volumes:
+  caddy_data:
+  caddy_config:

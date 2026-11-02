@@ -1,0 +1,24 @@
+name: Feature request
+description: Describe a concrete problem Relay could solve.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: "Describe the workflow and who needs it."
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What should the result look like?
+      description: "Explain the smallest useful outcome and any alternatives you considered."
+    validations:
+      required: true
+  - type: textarea
+    id: help
+    attributes:
+      label: How could you help?
+      description: "Optional: implementation, testing, design, documentation, or a reproducible example."

@@ -1,0 +1,11 @@
+# Relay media worker
+
+Run `pnpm worker` using Node 24, FFmpeg and ffprobe installed on PATH. Share `DATABASE_URL`, `DATA_DIR`, and `ENCRYPTION_KEY` with web. Set `ASR_URL` (default `http://127.0.0.1:8100`) and matching `INTERNAL_API_TOKEN`. `WORKER_CONCURRENCY` defaults to 2 and is capped at 8. Vertex uses Application Default Credentials, project and location from administrator settings. Other providers require administrator API keys encrypted by core.
+
+Jobs claim PostgreSQL row locks with `SKIP LOCKED`, use a two-minute renewable lease, and retry transient failures three times by default. Publication checks the lease and the editor's expected published revision inside one transaction. Stale render results remain ready for explicit publication. Original media survives every edit and routine cleanup. Explicit video deletion permits media removal after seven days, once no queued or running edit references the source. Cleanup only removes upload parts when its explicit `uploadParts` flag is true and the video is ready.
+
+Processing assembles checksum-verified parts, transcodes H.264/AAC MP4, writes VOD HLS, thumbnail, waveform and captions, then publishes the revision. Render jobs trim and stitch source clips, normalize frame dimensions/audio, apply timed region blurs, and remap transcripts. Partially cut segments without word timing are omitted; word-timed clips omit words crossing cut boundaries. Input recording duration is capped at six hours; worker speech requests use contiguous 30-minute WAV windows, then shift words and segments onto the full recording timeline. Cloud generation sends transcript text and timing only; no media or credentials enter prompts.
+
+Run `pnpm exec tsx --test tests/worker*.test.ts` for focused tests. Media tests require real FFmpeg and ffprobe. ASR tests live in `tests/asr_test.py`.
+
+AI notes belong to a specific revision; historical notes are retained when new versions publish. Regeneration preserves human edits only within that revision. See `packages/core/AI_REVISIONS.md` for schema migration and stale-edit preconditions. Stitched transcripts are ready only when every source has a ready transcript, including valid empty silence. If any source is missing, server mode queues ASR for the complete rendered result; on-device mode reports a failed transcript without silently sending audio to the server.

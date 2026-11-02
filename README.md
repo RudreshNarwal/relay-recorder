@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Your screen. Your stories. Your infrastructure.</strong><br>
-  A self-hosted video workspace with a native macOS recorder.
+  An open-source alternative to Loom. Self-hosted, with a native macOS recorder.
 </p>
 
 <p align="center">
@@ -186,6 +186,7 @@ Capture, upload, processing, and publication have separate states. Edits create 
 | [Analytics](docs/ANALYTICS.md), [Reports](docs/REPORTS.md), [Branding](docs/BRANDING.md) | Recording engagement, workspace reporting, and visual identity |
 | [Meeting capabilities](docs/MEETING-CAPABILITIES.md) | Automatic capture prerequisites and remaining qualification gaps |
 | [API contract](docs/openapi.json) | Machine-readable HTTP API reference |
+| [Website](website/README.md) | Marketing site preview, checks, and Cloudflare deployment |
 | [Validation](docs/VALIDATION.md) | Recorded validation evidence and remaining hardware checks |
 
 ## Current limitations

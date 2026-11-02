@@ -21,3 +21,6 @@ backups/
 # Local launch evidence and generated native packages.
 .context/
 apps/macos/dist/
+
+# Local Cloudflare preview state.
+.wrangler/

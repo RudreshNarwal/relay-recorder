@@ -180,7 +180,9 @@ final class CaptureEngine: NSObject, SCStreamOutput, SCStreamDelegate, AVCapture
             queue.async {
                 do {
                     guard !self.recording else { throw RelayError.invalidState }
-                    let bytesPerMinute = Int64((Double(self.settings.width * self.settings.height * 5) + 192_000) / 8 * 60 * 1.1)
+                    let videoBitsPerSecond = Double(self.settings.width * self.settings.height * 5)
+                    let totalBitsPerSecond: Double = videoBitsPerSecond + 192_000
+                    let bytesPerMinute = Int64(totalBitsPerSecond / 8 * 60 * 1.1)
                     guard try CaptureCapabilities.freeBytes(at: url.deletingLastPathComponent()) >= CaptureFormat.diskReserve + bytesPerMinute else { throw RelayError.server("Disk space fell below the capture reserve. Free space and retry; existing recordings are retained.") }
                     self.recordingURL = url; self.lastDiskCheck = Self.now; self.lastCameraSample = Self.now
                     self.writtenFrames = 0; self.droppedFrames = 0; self.consecutiveDrops = 0; self.reportedError = false
